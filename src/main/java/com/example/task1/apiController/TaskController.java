@@ -27,13 +27,13 @@ public class TaskController {
                                         HttpServletRequest request){
         if(!visitor_name.isEmpty()) {
             String client = taskService.getClientIp(request);
-            String location = taskService.getLocation("105.112.69.228");
-            Double temp = taskService.getWeather("lagos");
+            String location = taskService.getLocation(client);
+            Double temp = taskService.getWeather(location);
 
             responseDTO.setClient_ip(client);
             responseDTO.setLocation(location);
             responseDTO.setGreeting("Hello, "+visitor_name+"!," +
-                    " the temperature is " + temp + " degrees Celcius in "+location);
+                    " the temperature is " + temp + " degrees Celcius in "+ location);
             return ResponseEntity.ok(responseDTO);
         }else{
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("visitor_Name is required");
