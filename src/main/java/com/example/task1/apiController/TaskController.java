@@ -35,7 +35,7 @@ public class TaskController {
 
             responseDTO.setClient_ip(client);
             responseDTO.setLocation(location);
-            responseDTO.setGreeting("Hello, "+visitor_name+"!," +
+            responseDTO.setGreeting("Hello, "+visitor_name.replace("^\"|\"$", "")+"!," +
                     " the temperature is " + temp + " degrees Celcius in "+ location);
             return ResponseEntity.ok(responseDTO);
         }else{
