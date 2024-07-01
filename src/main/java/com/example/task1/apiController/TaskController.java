@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api")
 public class TaskController {
@@ -27,8 +29,9 @@ public class TaskController {
                                         HttpServletRequest request){
         if(!visitor_name.isEmpty()) {
             String client = taskService.getClientIp(request);
-            String location = taskService.getLocation(client);
-            Double temp = taskService.getWeather(location);
+            Map<String, Object> data = taskService.getData(client);
+            String temp = data.get("temp_c").toString().substring(0,2);
+            String location = data.get("region").toString();
 
             responseDTO.setClient_ip(client);
             responseDTO.setLocation(location);

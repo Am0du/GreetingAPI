@@ -34,18 +34,30 @@ public class WebCReq {
                 .bodyToMono(String.class);
     }
 
+    public Mono<Map<String, Object>> getData(String clientIp) {
 
-        public Mono<Double> getTemp(String city) {
-            return webClient.get()
-                    .uri("http://api.weatherapi.com/v1/current.json?q="+city+"&key="+key)
-                    .retrieve()
-                    .bodyToMono(Map.class)
-                    .map(responseMap -> {
-                        Map<String, Object> current = (Map<String, Object>) responseMap.get("current");
-                        return Double.valueOf(current.get("temp_c").toString());
-                    });
-        }
+    return webClient.get()
+            .uri("http://api.weatherapi.com/v1/current.json?q="+clientIp+"&key="+key)
+            .retrieve()
+            .bodyToMono(Map.class)
+            .map(this::extractRegionAndTemp);
     }
+
+    private Map<String, Object> extractRegionAndTemp(Map<String, Object> response) {
+        Map<String, Object> location = (Map<String, Object>) response.get("location");
+        Map<String, Object> current = (Map<String, Object>) response.get("current");
+
+        String region = (String) location.get("region");
+        Double tempC = (Double) current.get("temp_c");
+
+        return Map.of(
+                "region", region,
+                "temp_c", tempC
+        );
+    }
+
+}
+
 
 
 

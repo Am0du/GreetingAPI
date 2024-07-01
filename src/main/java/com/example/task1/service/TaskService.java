@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 @Service
 public class TaskService {
 
@@ -35,8 +37,8 @@ public class TaskService {
 
     }
 
-    public Double getWeather(String city){
-        return webCReq.getTemp(city).block();
+    public Map<String, Object> getData(String clientIp){
+        return webCReq.getData(clientIp).block();
 
     }
 
