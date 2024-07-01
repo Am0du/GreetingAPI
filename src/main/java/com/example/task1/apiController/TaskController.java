@@ -35,8 +35,8 @@ public class TaskController {
 
             responseDTO.setClient_ip(client);
             responseDTO.setLocation(location);
-            responseDTO.setGreeting("Hello, "+visitor_name.replace("^\"|\"$", "")+"!," +
-                    " the temperature is " + temp + " degrees Celcius in "+ location);
+            responseDTO.setGreeting("Hello, "+visitor_name.replaceAll("^\"|\"$", "")+"!," +
+                    " the temperature is " + temp + " degrees Celsius in "+ location);
             return ResponseEntity.ok(responseDTO);
         }else{
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("visitor_Name is required");
